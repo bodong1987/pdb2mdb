@@ -5,14 +5,14 @@
     If you want to compile this project by yourself, just open the sln file with vs2019 and compile it directly.
     prebuild release can be found in pdb2mdb/bin/Release    
 
-    usage: makesure your dll has a pdb file, and pdb project setting is <DebugType>full</DebugType>, and then: pdb2mdb xxx.dll 
+    usage: makesure your dll has a pdb file, and project settings <DebugType>full</DebugType>, and then: pdb2mdb xxx.dll 
     eg : pdb2mdb D:\test.dll, don't use D:\test.pdb.
 # references
-    https://gist.github.com/jbevain/ba23149da8369e4a966f
-    https://github.com/microsoft/cci
-    https://www.nuget.org/packages/Microsoft.DiaSymReader/
-    https://github.com/dotnet/symreader-converter
-    https://dev.azure.com/dnceng/public/_packaging?_a=feed&feed=dotnet-tools
-    https://github.com/jbevain/cecil
-    https://github.com/mono/mono
-    https://www.nuget.org/packages/System.Collections.Immutable/6.0.0-preview.6.21352.12
+    pdb2mdb.exe<https://gist.github.com/jbevain/ba23149da8369e4a966f>
+    microsoft.cci<https://github.com/microsoft/cci>
+    DiaSymReader<https://www.nuget.org/packages/Microsoft.DiaSymReader/>
+    DiaSymReader.Converter<https://github.com/dotnet/symreader-converter>
+    DiaSymReader.Converter Prebuild Binaries<https://dev.azure.com/dnceng/public/_packaging?_a=feed&feed=dotnet-tools>
+    Mono.Cecil<https://github.com/jbevain/cecil>
+    Mono<https://github.com/mono/mono>
+    System.Collections.Immutable<https://www.nuget.org/packages/System.Collections.Immutable/6.0.0-preview.6.21352.12>
