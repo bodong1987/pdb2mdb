@@ -7,12 +7,14 @@
 
     usage: makesure your dll has a pdb file, and project settings <DebugType>full</DebugType>, and then: pdb2mdb xxx.dll 
     eg : pdb2mdb D:\test.dll, don't use D:\test.pdb.
+    
 # references
-    pdb2mdb.exe<https://gist.github.com/jbevain/ba23149da8369e4a966f>
-    microsoft.cci<https://github.com/microsoft/cci>
-    DiaSymReader<https://www.nuget.org/packages/Microsoft.DiaSymReader/>
-    DiaSymReader.Converter<https://github.com/dotnet/symreader-converter>
-    DiaSymReader.Converter Prebuild Binaries<https://dev.azure.com/dnceng/public/_packaging?_a=feed&feed=dotnet-tools>
-    Mono.Cecil<https://github.com/jbevain/cecil>
-    Mono<https://github.com/mono/mono>
-    System.Collections.Immutable<https://www.nuget.org/packages/System.Collections.Immutable/6.0.0-preview.6.21352.12>
+
+pdb2mdb.exe<br><https://gist.github.com/jbevain/ba23149da8369e4a966f><br>
+microsoft.cci<br><https://github.com/microsoft/cci><br>
+DiaSymReader<br><https://www.nuget.org/packages/Microsoft.DiaSymReader/><br>
+DiaSymReader.Converter<br><https://github.com/dotnet/symreader-converter><br>
+DiaSymReader.Converter Prebuild Binaries<br><https://dev.azure.com/dnceng/public/_packaging?_a=feed&feed=dotnet-tools><br>
+Mono.Cecil<br><https://github.com/jbevain/cecil><br>
+Mono<br><https://github.com/mono/mono><br>
+System.Collections.Immutable<br><https://www.nuget.org/packages/System.Collections.Immutable/6.0.0-preview.6.21352.12><br>
