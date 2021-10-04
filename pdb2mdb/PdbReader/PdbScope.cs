@@ -10,9 +10,9 @@ namespace Microsoft.Cci.Pdb {
     internal PdbScope[] scopes;
     internal string[] usedNamespaces;
 
-    //internal uint segment;
+    internal uint segment;
     internal uint address;
-    internal uint offset;
+    //internal uint offset;
     internal uint length;
 
     internal PdbScope(uint address, uint offset, uint length, PdbSlot[] slots, PdbConstant[] constants, string[] usedNamespaces) {
@@ -21,7 +21,7 @@ namespace Microsoft.Cci.Pdb {
       this.scopes = ArrayT<PdbScope>.Empty;
       this.usedNamespaces = usedNamespaces;
       this.address = address;
-      this.offset = offset;
+     // this.offset = offset;
       this.length = length;
     }
 
@@ -31,9 +31,9 @@ namespace Microsoft.Cci.Pdb {
     }
 
     internal PdbScope(uint funcOffset, BlockSym32 block, BitAccess bits, out uint typind) {
-      //this.segment = block.seg;
-      this.address = block.off;
-      this.offset = block.off - funcOffset;
+      this.segment = block.seg;
+      this.address = block.off - funcOffset;
+   //   this.offset = block.off - funcOffset;
       this.length = block.len;
       typind = 0;
 
@@ -80,6 +80,7 @@ namespace Microsoft.Cci.Pdb {
           case SYM.S_MANSLOT:
             slots[slot++] = new PdbSlot(bits);
             bits.Position = stop;
+                        typind = slots[slot - 1].typeToken;
             break;
 
           case SYM.S_UNAMESPACE:

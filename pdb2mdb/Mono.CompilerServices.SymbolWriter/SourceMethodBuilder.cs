@@ -236,11 +236,15 @@ namespace Mono.CompilerServices.SymbolWriter
 				//}
 			}
 
-			var entry = new MethodEntry (
-				file, _comp_unit.Entry, token, ScopeVariables,
-				Locals, method_lines.ToArray (), blocks, null, MethodEntry.Flags.ColumnsInfoIncluded, ns_id);
+            // 			var entry = new MethodEntry (
+            // 				file, _comp_unit.Entry, token, ScopeVariables,
+            // 				Locals, method_lines.ToArray (), blocks, null, MethodEntry.Flags.ColumnsInfoIncluded, ns_id);
 
-			file.AddMethod (entry);
+            var entry = new MethodEntry(
+                file, _comp_unit.Entry, token, ScopeVariables,
+                Locals, method_lines.ToArray(), blocks, null, (MethodEntry.Flags)0, ns_id);
+
+            file.AddMethod (entry);
 		}
 	}
 }

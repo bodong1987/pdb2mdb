@@ -19,12 +19,12 @@ namespace Microsoft.Cci.Pdb {
     internal uint slotToken;
     internal uint tokenOfMethodWhoseUsingInfoAppliesToThisMethod;
     internal string name;
-    //internal string module;
-    //internal ushort flags;
+    internal string module;
+    internal ushort flags;
 
     internal uint segment;
     internal uint address;
-    //internal uint length;
+    internal uint length;
 
     //internal byte[] metadata;
     internal PdbScope[] scopes;
@@ -38,12 +38,17 @@ namespace Microsoft.Cci.Pdb {
     internal List<ILocalScope>/*?*/ iteratorScopes;
     internal PdbSynchronizationInformation/*?*/ synchronizationInformation;
 
-    /// <summary>
-    /// Flag saying whether the method has been identified as a product of VB compilation using
-    /// the legacy Windows PDB symbol format, in which case scope ends need to be shifted by 1
-    /// due to different semantics of scope limits in VB and C# compilers.
-    /// </summary>
-    private bool visualBasicScopesAdjusted = false;
+        public override string ToString()
+        {
+            return $"{module}:{name} {token} - {address} - {length}";
+        }
+
+        /// <summary>
+        /// Flag saying whether the method has been identified as a product of VB compilation using
+        /// the legacy Windows PDB symbol format, in which case scope ends need to be shifted by 1
+        /// due to different semantics of scope limits in VB and C# compilers.
+        /// </summary>
+        private bool visualBasicScopesAdjusted = false;
 
     private static string StripNamespace(string module) {
       int li = module.LastIndexOf('.');
@@ -84,10 +89,10 @@ namespace Microsoft.Cci.Pdb {
       }
     }
 
-    internal static PdbFunction[] LoadManagedFunctions(/*string module,*/
+    internal static PdbFunction[] LoadManagedFunctions(string module,
                                                        BitAccess bits, uint limit,
                                                        bool readStrings) {
-      //string mod = StripNamespace(module);
+      string mod = StripNamespace(module);
       int begin = bits.Position;
       int count = 0;
 
@@ -162,10 +167,10 @@ namespace Microsoft.Cci.Pdb {
             } else {
               bits.SkipCString(out proc.name);
             }
-            //Console.WriteLine("token={0:X8} [{1}::{2}]", proc.token, module, proc.name);
+            Console.WriteLine("token={0:X8} [{1}::{2}]", proc.token, module, proc.name);
 
             bits.Position = stop;
-            funcs[func++] = new PdbFunction(/*module,*/ proc, bits);
+            funcs[func++] = new PdbFunction(module, proc, bits);
             break;
 
           default: {
@@ -233,14 +238,14 @@ namespace Microsoft.Cci.Pdb {
     internal PdbFunction() {
     }
 
-    internal PdbFunction(/*string module, */ManProcSym proc, BitAccess bits) {
+    internal PdbFunction(string module, ManProcSym proc, BitAccess bits) {
       this.token = proc.token;
-      //this.module = module;
+      this.module = module;
       this.name = proc.name;
-      //this.flags = proc.flags;
+      this.flags = proc.flags;
       this.segment = proc.seg;
       this.address = proc.off;
-      //this.length = proc.len;
+      this.length = proc.len;
 
       if (proc.seg != 1) {
         throw new PdbDebugException("Segment is {0}, not 1.", proc.seg);
@@ -322,8 +327,10 @@ namespace Microsoft.Cci.Pdb {
             }
 
           case SYM.S_MANSLOT:
-            slots[slot++] = new PdbSlot(bits);
+            slots[slot] = new PdbSlot(bits);
+                        slotToken = slots[slot].typeToken;
             bits.Position = stop;
+                        slot++;
             break;
 
           case SYM.S_MANCONSTANT:

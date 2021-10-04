@@ -488,7 +488,10 @@ namespace Microsoft.Cci {
     }
 
     uint ILocalScope.Length {
-      get { return this.originalScope.Length; }
+      get {
+                throw new NotImplementedException();
+                // return this.originalScope.Length;
+            }
     }
 
     IMethodDefinition ILocalScope.MethodDefinition {

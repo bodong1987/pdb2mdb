@@ -693,24 +693,28 @@ namespace Mono.CompilerServices.SymbolWriter
 		public SourceFileEntry (MonoSymbolFile file, string file_name)
 		{
 			this.file = file;
-			this.file_name = file_name;
+			this.sourceFile = this.file_name = file_name;
 			this.Index = file.AddSource (this);
 
 			creating = true;
 		}
 
 		public SourceFileEntry (MonoSymbolFile file, string sourceFile, byte [] guid, byte [] checksum)
-			: this (file, sourceFile, sourceFile, guid, checksum)
+			: this (file, sourceFile)
 		{
-		}
+            this.guid = guid;
+            this.hash = checksum;
+        }
 
-		public SourceFileEntry (MonoSymbolFile file, string fileName, string sourceFile, byte[] guid, byte[] checksum)
+#if false
+		private SourceFileEntry (MonoSymbolFile file, string fileName, string sourceFile, byte[] guid, byte[] checksum)
 			: this (file, fileName)
 		{
 			this.guid = guid;
 			this.hash = checksum;
 			this.sourceFile = sourceFile;
 		}
+#endif
 
 		public byte[] Checksum {
 			get {
@@ -724,7 +728,11 @@ namespace Mono.CompilerServices.SymbolWriter
 			bw.Write (file_name);
 
 			if (guid == null)
-				guid = new byte[16];
+            {
+				// guid = new byte[16];
+				this.guid = Guid.NewGuid().ToByteArray();
+			}
+				
 
 			if (hash == null) {
 				try {
@@ -747,7 +755,7 @@ namespace Mono.CompilerServices.SymbolWriter
 
 			bw.Write (guid);
 			bw.Write (hash);
-			bw.Write ((byte) (auto_generated ? 1 : 0));
+			bw.Write ((byte)(auto_generated ? 1 : 0));
 		}
 
 		internal void Write (BinaryWriter bw)
@@ -1059,7 +1067,7 @@ namespace Mono.CompilerServices.SymbolWriter
 
 	public class MethodEntry : IComparable
 	{
-		#region This is actually written to the symbol file
+#region This is actually written to the symbol file
 		public readonly int CompileUnitIndex;
 		public readonly int Token;
 		public readonly int NamespaceID;
@@ -1071,7 +1079,7 @@ namespace Mono.CompilerServices.SymbolWriter
 		int ScopeVariableTableOffset;
 		int RealNameOffset;
 		Flags flags;
-		#endregion
+#endregion
 
 		int index;
 
@@ -1252,13 +1260,14 @@ namespace Mono.CompilerServices.SymbolWriter
 				bw.Write (real_name);
 			}
 
-			foreach (var lne in lnt.LineNumbers) {
-				if (lne.EndRow != -1 || lne.EndColumn != -1)
-					flags |= Flags.EndInfoIncluded;
-			}
+// 			foreach (var lne in lnt.LineNumbers) {
+// 				if (lne.EndRow != -1 || lne.EndColumn != -1)
+// 					flags |= Flags.EndInfoIncluded;
+// 			}
 
 			LineNumberTableOffset = (int) bw.BaseStream.Position;
-			lnt.Write (file, bw, (flags & Flags.ColumnsInfoIncluded) != 0, (flags & Flags.EndInfoIncluded) != 0);
+			// lnt.Write (file, bw, (flags & Flags.ColumnsInfoIncluded) != 0, (flags & Flags.EndInfoIncluded) != 0);
+			lnt.Write(file, bw, false, false);
 
 			DataOffset = (int) bw.BaseStream.Position;
 
@@ -1409,12 +1418,12 @@ namespace Mono.CompilerServices.SymbolWriter
 
 	public struct NamespaceEntry
 	{
-		#region This is actually written to the symbol file
+#region This is actually written to the symbol file
 		public readonly string Name;
 		public readonly int Index;
 		public readonly int Parent;
 		public readonly string[] UsingClauses;
-		#endregion
+#endregion
 
 		public NamespaceEntry (string name, int index, string[] using_clauses, int parent)
 		{

@@ -290,7 +290,7 @@ namespace Microsoft.Cci.Pdb {
 
       bits.Position = 4;
       // Console.WriteLine("{0}:", info.moduleName);
-      funcs = PdbFunction.LoadManagedFunctions(/*info.moduleName,*/
+      funcs = PdbFunction.LoadManagedFunctions(info.moduleName,
                                                bits, (uint)info.cbSyms,
                                                readStrings);
       if (funcs != null) {

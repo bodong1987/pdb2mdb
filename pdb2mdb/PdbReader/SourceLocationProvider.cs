@@ -1193,7 +1193,11 @@ namespace Microsoft.Cci.Pdb {
     /// The offset of the first operation in the scope.
     /// </summary>
     public uint Offset {
-      get { return this.pdbScope.offset; }
+      get 
+            {
+                throw new NotImplementedException("need implement.");
+            //    return this.pdbScope.offset; 
+            }
     }
 
     /// <summary>
