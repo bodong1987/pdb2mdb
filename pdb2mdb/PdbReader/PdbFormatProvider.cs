@@ -50,7 +50,8 @@ namespace Microsoft.Cci.Pdb {
               new PdbConverter().ConvertPortableToWindows(
                 peReader,
                 pdbReaderProvider.GetMetadataReader(),
-                cciWriter);
+                cciWriter,
+                PortablePdbConversionOptions.Default);
 
               PdbInfo pdbInfo = new PdbInfo()
               {
