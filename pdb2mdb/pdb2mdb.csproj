@@ -250,6 +250,7 @@
     <Compile Include="PEReader\UnmanagedReadWrite.cs" />
     <Compile Include="PEReader\UtilityDataStructures.cs" />
     <Compile Include="PEReader\WindowsRuntimeHost.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceModel\DummyObjects.cs" />
     <Compile Include="SourceModel\Implementations.cs" />
     <Compile Include="SourceModel\Interfaces.cs" />
