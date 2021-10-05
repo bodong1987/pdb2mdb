@@ -244,13 +244,9 @@ namespace Mono.CompilerServices.SymbolWriter
 				source.WriteData (bw);
 			foreach (CompileUnitEntry comp_unit in comp_units)
 				comp_unit.WriteData (bw);
-			int debugCnt = 0;
 			foreach (MethodEntry method in methods)
             {
 				method.WriteData(this, bw);
-
-				System.Diagnostics.Trace.WriteLine(string.Format("index = {0} offset = {1}", debugCnt, bw.BaseStream.Position));
-				debugCnt++;
 			}
 				
 			ot.DataSectionSize = (int) bw.BaseStream.Position - ot.DataSectionOffset;
